@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: agrotrack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: agrotrack/user-service:1.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_URL
+              value: postgres://user:pass@user-db:5432/users

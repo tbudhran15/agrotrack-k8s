@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crop-service
+  namespace: agrotrack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crop-service
+  template:
+    metadata:
+      labels:
+        app: crop-service
+    spec:
+      containers:
+        - name: crop-service
+          image: agrotrack/crop-service:1.0
+          ports:
+            - containerPort: 5001
+          env:
+            - name: DB_URL
+              value: postgres://crop:pass@crop-db:5432/crops
